@@ -1,0 +1,27 @@
+[project]
+name = "blog"
+version = "0.1.0"
+description = "a simple blog api"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.0.5",
+    "djangorestframework>=3.17.1",
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

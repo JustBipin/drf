@@ -17,6 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+    SpectacularJSONAPIView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -24,5 +30,9 @@ urlpatterns = [
     path("api/v1/", include("posts.urls")),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("auth/", include("dj_rest_auth.urls")),
-    path("auth/signup/", include("dj_rest_auth.registration.urls")),  # new
+    path("auth/signup/", include("dj_rest_auth.registration.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema")),
+    path("api/schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema")),
+    path("api/schema/json/", SpectacularJSONAPIView.as_view()),
 ]

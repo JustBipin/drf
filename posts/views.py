@@ -18,15 +18,4 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user.id)
-
-
-# class PostList(ListAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-
-
-# class PostDetail(RetrieveUpdateDestroyAPIView):
-#     permission_classes = [IsAuthorOrAdminOrReadOnly]
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
+        serializer.save(author=self.request.user)

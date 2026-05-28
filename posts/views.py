@@ -5,7 +5,7 @@ from rest_framework.permissions import AllowAny
 
 from .models import Post
 from .serializers import PostSerializer
-from .permissions import IsAdminOrAuthorOrReadOnly
+from .permissions import IsAuthorOrReadOnly
 
 
 class PostViewSet(ModelViewSet):
@@ -13,9 +13,12 @@ class PostViewSet(ModelViewSet):
     ViewSets for viewing and editing Post Viewsets
     """
 
-    permission_classes = [IsAdminOrAuthorOrReadOnly]
+    permission_classes = [IsAuthorOrReadOnly]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.id)
 
 
 # class PostList(ListAPIView):

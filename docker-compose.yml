@@ -1,0 +1,32 @@
+services:
+  web: 
+    build:
+      context: .
+      args:
+        - USER_ID=$(UID)
+        - GROUP_ID=$(GID)
+    command: python /app/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app:z
+    ports:
+      - 8000:8000
+    # environment:
+    # - POSTGRES_DB=postgres
+    # - POSTGRES_USER=postgres
+    # - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+
+  db: 
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432" # Not for Web service, docker already has shared network for that
+    volumes:
+      - postgres_data:/var/lib/postgresql/
+
+volumes:
+  postgres_data:

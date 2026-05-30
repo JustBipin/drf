@@ -5,4 +5,27 @@
 
 {% block content %}
 <h1>Homepage</h1>
+
+<nav>
+    {% if user.is_authenticated %}
+    <!-- logout url has doesn't support get method anymore. -->
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Log In</a> or
+        <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+</nav>
+<br>
+
+{% if user.is_authenticated %}
+Hi {{ user.username }}!
+{% else %}
+<p>You are not Logged in!</p>
+<p>If new, Signup</p>
+{% endif %}
+
+
 {% endblock content %}

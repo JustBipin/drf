@@ -1,5 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import resolve, reverse
+
+from .forms import AdminUserCreationForm
+from .views import SignupPageView
 
 
 class CustomUserTests(TestCase):
@@ -28,3 +32,23 @@ class CustomUserTests(TestCase):
             self.assertTrue(admin_user.is_active)
             self.assertTrue(admin_user.is_staff)
             self.assertTrue(admin_user.is_superuser)
+
+
+class SignupPageTests(TestCase):
+    def setUp(self):
+        self.response = Client().get(reverse("signup"))
+
+    def test_signup_template(self):
+        self.assertEqual(self.response.status_code, 200)
+        self.assertTemplateUsed(self.response, "registration/signup.html")
+        self.assertContains(self.response, "Sign Up")
+        self.assertNotContains(self.response, "this text should not be inside signup")
+
+    def test_signup_form(self):
+        form = self.response.context.get("form")
+        self.assertIsInstance(form, AdminUserCreationForm)
+        self.assertContains(self.response, "csrfmiddlewaretoken")
+
+    def test_signup_view(self):  # new
+        view = resolve("/accounts/signup/")
+        self.assertEqual(view.func.__name__, SignupPageView.as_view().__name__)

@@ -166,3 +166,6 @@ AUTHENTICATION_BACKENDS = (
 CCOUNT_LOGIN_METHODS = {"email*"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_UNIQUE_EMAIL = True  # new
+
+
+DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"

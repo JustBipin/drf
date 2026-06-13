@@ -16,12 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
-    SpectacularSwaggerView,
-    SpectacularRedocView,
     SpectacularJSONAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
 )
 
 urlpatterns = [
@@ -31,8 +31,9 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("auth/", include("dj_rest_auth.urls")),
     path("auth/signup/", include("dj_rest_auth.registration.urls")),
+    # schema
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema")),
-    path("api/schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema")),
+    ("api/schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema")),
     path("api/schema/json/", SpectacularJSONAPIView.as_view()),
 ]

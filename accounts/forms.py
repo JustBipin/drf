@@ -10,7 +10,6 @@ from .models import CustomUser
 # link to the stack_overflow code below:
 # https://stackoverflow.com/questions/79333449/django-fielderror-unknown-fields-usable-password-specified
 class CustomUserCreationForm(AdminUserCreationForm):
-
     # inherit parent Meta class
     class Meta(UserCreationForm.Meta):
         model = CustomUser
@@ -20,7 +19,6 @@ class CustomUserCreationForm(AdminUserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
-
     class Meta(UserChangeForm.Meta):
         model = CustomUser
         fields = "__all__"

@@ -1,0 +1,9 @@
+h1 {
+    font-weight: 600;
+    color: cyan;
+}
+
+.screenshot {
+    width: 500px;
+    height: auto;
+}

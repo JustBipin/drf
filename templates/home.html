@@ -1,10 +1,12 @@
 <!-- templates/home.html -->
 {% extends '_base.html' %}
 
+{% load static %}
 {% block title %}Home{% endblock title %}
 
 {% block content %}
 <h1>Homepage</h1>
+    <img class="screenshot" src="{% static 'images/wtf_firefox.png' %}">
 
 <nav>
     {% if user.is_authenticated %}

@@ -40,20 +40,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",  # new
     # Third-party
+    "crispy_forms",
+    "crispy_bootstrap5",
+    # third-party authenticaton
     "allauth",  # new
-    "allauth.account",  # new
+    "allauth.account",
     # local
     "users.apps.UsersConfig",
     "pages.apps.PagesConfig",
 ]
 
-# django-allauth setting
-SITE_ID = 1
+# django-crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",  # new
-)
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  #
 
@@ -137,9 +137,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 
 AUTH_USER_MODEL = "users.CustomUser"
 
 LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT = "home"
+
+# django-allauth setting
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",  # new
+)
+
+
+# django-allauth config
+CCOUNT_LOGIN_METHODS = {"email*"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_UNIQUE_EMAIL = True  # new
